@@ -10,7 +10,7 @@ using ReaderSharp.Data;
 
 namespace ReaderSharp.Migrations
 {
-    [DbContext(typeof(LiteDbContext))]
+    [DbContext(typeof(ReaderDbContext))]
     [Migration("20220506051852_InitialDb")]
     partial class InitialDb
     {

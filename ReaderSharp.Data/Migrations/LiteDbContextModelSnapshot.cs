@@ -9,7 +9,7 @@ using ReaderSharp.Data;
 
 namespace ReaderSharp.Migrations
 {
-    [DbContext(typeof(LiteDbContext))]
+    [DbContext(typeof(ReaderDbContext))]
     partial class LiteDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
