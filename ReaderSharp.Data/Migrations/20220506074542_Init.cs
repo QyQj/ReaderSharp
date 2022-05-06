@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ReaderSharp.Migrations
+namespace ReaderSharp.Data.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -189,22 +189,26 @@ namespace ReaderSharp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_SourceBookInfoRules_BookSourceId",
                 table: "SourceBookInfoRules",
-                column: "BookSourceId");
+                column: "BookSourceId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SourceCatalogRules_BookSourceId",
                 table: "SourceCatalogRules",
-                column: "BookSourceId");
+                column: "BookSourceId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SourceContentRules_BookSourceId",
                 table: "SourceContentRules",
-                column: "BookSourceId");
+                column: "BookSourceId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SourceSearchRule_BookSourceId",
                 table: "SourceSearchRule",
-                column: "BookSourceId");
+                column: "BookSourceId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

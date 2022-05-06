@@ -8,11 +8,11 @@ using ReaderSharp.Data;
 
 #nullable disable
 
-namespace ReaderSharp.Migrations
+namespace ReaderSharp.Data.Migrations
 {
     [DbContext(typeof(ReaderDbContext))]
-    [Migration("20220506051852_InitialDb")]
-    partial class InitialDb
+    [Migration("20220506074542_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,7 +132,8 @@ namespace ReaderSharp.Migrations
 
                     b.HasKey("BookInfoRuleId");
 
-                    b.HasIndex("BookSourceId");
+                    b.HasIndex("BookSourceId")
+                        .IsUnique();
 
                     b.ToTable("SourceBookInfoRules");
                 });
@@ -165,7 +166,8 @@ namespace ReaderSharp.Migrations
 
                     b.HasKey("CatalogRuleId");
 
-                    b.HasIndex("BookSourceId");
+                    b.HasIndex("BookSourceId")
+                        .IsUnique();
 
                     b.ToTable("SourceCatalogRules");
                 });
@@ -186,7 +188,8 @@ namespace ReaderSharp.Migrations
 
                     b.HasKey("ContentRuleId");
 
-                    b.HasIndex("BookSourceId");
+                    b.HasIndex("BookSourceId")
+                        .IsUnique();
 
                     b.ToTable("SourceContentRules");
                 });
@@ -225,7 +228,8 @@ namespace ReaderSharp.Migrations
 
                     b.HasKey("SearchRuleId");
 
-                    b.HasIndex("BookSourceId");
+                    b.HasIndex("BookSourceId")
+                        .IsUnique();
 
                     b.ToTable("SourceSearchRule");
                 });
@@ -257,8 +261,8 @@ namespace ReaderSharp.Migrations
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceBookInfoRule", b =>
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
-                        .WithMany("BookInfoRules")
-                        .HasForeignKey("BookSourceId");
+                        .WithOne("BookInfoRule")
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceBookInfoRule", "BookSourceId");
 
                     b.Navigation("BookSource");
                 });
@@ -266,8 +270,8 @@ namespace ReaderSharp.Migrations
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceCatalogRule", b =>
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
-                        .WithMany("CatalogRules")
-                        .HasForeignKey("BookSourceId");
+                        .WithOne("CatalogRule")
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceCatalogRule", "BookSourceId");
 
                     b.Navigation("BookSource");
                 });
@@ -275,8 +279,8 @@ namespace ReaderSharp.Migrations
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceContentRule", b =>
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
-                        .WithMany("ContentRules")
-                        .HasForeignKey("BookSourceId");
+                        .WithOne("ContentRule")
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceContentRule", "BookSourceId");
 
                     b.Navigation("BookSource");
                 });
@@ -284,8 +288,8 @@ namespace ReaderSharp.Migrations
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceSearchRule", b =>
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
-                        .WithMany("SearchRules")
-                        .HasForeignKey("BookSourceId");
+                        .WithOne("SearchRule")
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceSearchRule", "BookSourceId");
 
                     b.Navigation("BookSource");
                 });
@@ -299,13 +303,13 @@ namespace ReaderSharp.Migrations
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.BookSource", b =>
                 {
-                    b.Navigation("BookInfoRules");
+                    b.Navigation("BookInfoRule");
 
-                    b.Navigation("CatalogRules");
+                    b.Navigation("CatalogRule");
 
-                    b.Navigation("ContentRules");
+                    b.Navigation("ContentRule");
 
-                    b.Navigation("SearchRules");
+                    b.Navigation("SearchRule");
                 });
 #pragma warning restore 612, 618
         }
