@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
@@ -8,7 +9,7 @@ namespace ReaderSharp.Models.Entities
     /// 书籍信息
     /// </summary>
     [Table("Book")]
-    public class BookInfo
+    public class Book
     {
         [Key]
         public string BookId { get; set; }
@@ -20,5 +21,9 @@ namespace ReaderSharp.Models.Entities
         public string SourceId { get; set; }
 
         public byte[] Picture { get; set; }
+
+        public IEnumerable<BookChapter> Chapters { get; set; }
+
+        public IEnumerable<BookParagraph> Paragraphs { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReaderSharp.Models.Entities
@@ -16,5 +17,13 @@ namespace ReaderSharp.Models.Entities
         public bool IsEnabled { get; set; }
 
         public string BaseUrl { get; set; }
+
+        public IEnumerable<SourceBookInfoRule> BookInfoRules { get; set; }
+
+        public IEnumerable<SourceCatalogRule> CatalogRules { get; set; }
+
+        public IEnumerable<SourceContentRule> ContentRules { get; set; }
+
+        public IEnumerable<SourceSearchRule> SearchRules { get; set; }
     }
 }

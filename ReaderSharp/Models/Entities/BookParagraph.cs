@@ -9,11 +9,14 @@ namespace ReaderSharp.Models.Entities
         [Key]
         public string ParagraphId { get; set; }
 
+        public string Content { get; set; }
+
         public string BookId { get; set; }
+
+        public Book Book { get; set; }
 
         public string ChapterId { get; set; }
 
-        public string Content { get; set; }
-
+        public BookChapter Chapter { get; set; }
     }
 }

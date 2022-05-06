@@ -1,8 +1,11 @@
-﻿namespace ReaderSharp.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ReaderSharp.Models.Entities
 {
     public class SourceSearchRule
     {
-        public string BookSourceId { get; set; }
+        [Key]
+        public string SearchRuleId { get; set; }
 
         public string BookList { get; set; }
 
@@ -19,5 +22,9 @@
         public string WordCount { get; set; }
 
         public string LastChapter { get; set; }
+
+        public string BookSourceId { get; set; }
+
+        public BookSource BookSource { get; set; }
     }
 }
