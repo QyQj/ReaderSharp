@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
-namespace ReaderSharp.Models
+namespace ReaderSharp.Models.Entities
 {
     /// <summary>
     /// 书籍信息

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReaderSharp.Models
+namespace ReaderSharp.Models.Entities
 {
     [Table("BookParagraph")]
     public class BookParagraph

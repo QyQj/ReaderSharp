@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReaderSharp.Models
+namespace ReaderSharp.Models.Entities
 {
     [Table("BookSource")]
     public record BookSource
@@ -9,12 +9,12 @@ namespace ReaderSharp.Models
         [Key]
         public string BookSourceId { get; set; }
 
+        public string BookSourceName { get; set; }
+
+        public int BookSourceType { get; set; }
+
+        public bool IsEnabled { get; set; }
+
         public string BaseUrl { get; set; }
-
-        public string BookUrl { get; set; }
-
-        public string ChapterUrl { get; set; }
-
-        public string PicUrl { get; set; }
     }
 }
