@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReaderSharp.Models;
+using ReaderSharp.Models.Entities;
 
 namespace ReaderSharp.Data
 {
