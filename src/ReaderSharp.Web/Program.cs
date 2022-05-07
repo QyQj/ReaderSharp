@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ReaderDbContext>(options =>
 {
     options.UseSqlite("DataSource=ReaderSharp.db;Cache=Shared");
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDynamicWebApiCore<ServiceLocalSelectController, ServiceActionRouteFactory>();
 builder.Services.AddScoped<IBookSourceManager, BookSourceManager>();
 builder.Services.AddScoped<IBookManager, BookManager>();
