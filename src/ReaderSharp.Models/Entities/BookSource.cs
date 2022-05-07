@@ -18,6 +18,8 @@ namespace ReaderSharp.Models.Entities
 
         public string BaseUrl { get; set; }
 
+        public string BookSourceNote { get; set; }
+
         public SourceBookInfoRule BookInfoRule { get; set; }
 
         public SourceCatalogRule CatalogRule { get; set; }
