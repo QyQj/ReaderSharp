@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using ReaderSharp.Models.Dtos;
 using ReaderSharp.Models.Entities;
-using System;
 
-namespace ReaderSharp.Models.MapperProfile
+namespace ReaderSharp.Services.MapperProfile
 {
     public class ImportBookSourceProfile : Profile
     {

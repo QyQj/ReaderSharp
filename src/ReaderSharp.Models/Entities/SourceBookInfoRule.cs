@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReaderSharp.Models.Entities
 {
+    [Table("SourceBookInfoRule")]
     public class SourceBookInfoRule
     {
         [Key]
@@ -17,6 +18,10 @@ namespace ReaderSharp.Models.Entities
         public string Introduction { get; set; }
 
         public string LastChapter { get; set; }
+
+        public string CatalogUrl { get; set; }
+
+        public string WordCount { get; set; }
 
         public string BookSourceId { get; set; }
 

@@ -12,7 +12,7 @@ using ReaderSharp.Models.Entities;
 
 namespace ReaderSharp.Services
 {
-    [APIService]
+    [APIService("BookSource")]
     public class BookSourceService : ControllerBase
     {
         private readonly IBookSourceManager _manager;

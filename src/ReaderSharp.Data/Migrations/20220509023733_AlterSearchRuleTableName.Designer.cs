@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReaderSharp.Data;
 
@@ -10,9 +11,10 @@ using ReaderSharp.Data;
 namespace ReaderSharp.Data.Migrations
 {
     [DbContext(typeof(ReaderDbContext))]
-    partial class ReaderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220509023733_AlterSearchRuleTableName")]
+    partial class AlterSearchRuleTableName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -142,7 +144,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceBookInfoRule");
+                    b.ToTable("SourceBookInfoRules");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceCatalogRule", b =>
@@ -176,7 +178,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceCatalogRule");
+                    b.ToTable("SourceCatalogRules");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceContentRule", b =>
@@ -198,7 +200,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceContentRule");
+                    b.ToTable("SourceContentRules");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceSearchRule", b =>
@@ -238,7 +240,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceSearchRule");
+                    b.ToTable("SourceSearchRules");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.BookChapter", b =>

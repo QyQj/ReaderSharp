@@ -15,7 +15,7 @@ namespace ReaderSharp.Data
 
         public DbSet<SourceContentRule> SourceContentRules { get; set; }
 
-        public DbSet<SourceSearchRule> SourceSearchRule { get; set; }
+        public DbSet<SourceSearchRule> SourceSearchRules { get; set; }
 
         public DbSet<Book> BookInfos { get; set; }
 

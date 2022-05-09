@@ -32,6 +32,7 @@ namespace ReaderSharp.Data
                 bookSource.SearchRule.BookSource = bookSource;
             }
             await _dbContext.AddRangeAsync(sources);
+            await _dbContext.SaveChangesAsync();
             return true;
         }
     }

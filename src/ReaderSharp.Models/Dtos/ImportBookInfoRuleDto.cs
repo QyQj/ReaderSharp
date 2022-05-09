@@ -18,5 +18,9 @@ namespace ReaderSharp.Models.Dtos
         public string Introduction { get; set; }
 
         public string LastChapter { get; set; }
+
+        public string CatalogUrl { get; set; }
+
+        public string WordCount { get; set; }
     }
 }

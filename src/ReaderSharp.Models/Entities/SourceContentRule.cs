@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReaderSharp.Models.Entities
 {
+    [Table("SourceContentRule")]
     public class SourceContentRule
     {
         [Key]
