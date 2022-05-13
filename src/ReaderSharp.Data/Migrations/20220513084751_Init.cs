@@ -32,7 +32,8 @@ namespace ReaderSharp.Data.Migrations
                     BookSourceName = table.Column<string>(type: "TEXT", nullable: true),
                     BookSourceType = table.Column<int>(type: "INTEGER", nullable: false),
                     IsEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    BaseUrl = table.Column<string>(type: "TEXT", nullable: true)
+                    BaseUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    BookSourceNote = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +47,7 @@ namespace ReaderSharp.Data.Migrations
                     ChapterId = table.Column<string>(type: "TEXT", nullable: false),
                     ChapterName = table.Column<string>(type: "TEXT", nullable: true),
                     CatalogIndex = table.Column<int>(type: "INTEGER", nullable: false),
-                    BookId = table.Column<string>(type: "TEXT", nullable: true)
+                    BookId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,11 +56,12 @@ namespace ReaderSharp.Data.Migrations
                         name: "FK_BookChapter_Book_BookId",
                         column: x => x.BookId,
                         principalTable: "Book",
-                        principalColumn: "BookId");
+                        principalColumn: "BookId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SourceBookInfoRules",
+                name: "SourceBookInfoRule",
                 columns: table => new
                 {
                     BookInfoRuleId = table.Column<string>(type: "TEXT", nullable: false),
@@ -68,20 +70,23 @@ namespace ReaderSharp.Data.Migrations
                     CoverUrl = table.Column<string>(type: "TEXT", nullable: true),
                     Introduction = table.Column<string>(type: "TEXT", nullable: true),
                     LastChapter = table.Column<string>(type: "TEXT", nullable: true),
-                    BookSourceId = table.Column<string>(type: "TEXT", nullable: true)
+                    CatalogUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    WordCount = table.Column<string>(type: "TEXT", nullable: true),
+                    BookSourceId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SourceBookInfoRules", x => x.BookInfoRuleId);
+                    table.PrimaryKey("PK_SourceBookInfoRule", x => x.BookInfoRuleId);
                     table.ForeignKey(
-                        name: "FK_SourceBookInfoRules_BookSource_BookSourceId",
+                        name: "FK_SourceBookInfoRule_BookSource_BookSourceId",
                         column: x => x.BookSourceId,
                         principalTable: "BookSource",
-                        principalColumn: "BookSourceId");
+                        principalColumn: "BookSourceId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SourceCatalogRules",
+                name: "SourceCatalogRule",
                 columns: table => new
                 {
                     CatalogRuleId = table.Column<string>(type: "TEXT", nullable: false),
@@ -91,35 +96,37 @@ namespace ReaderSharp.Data.Migrations
                     IsVip = table.Column<string>(type: "TEXT", nullable: true),
                     NextCatalogUrl = table.Column<string>(type: "TEXT", nullable: true),
                     UpdateTime = table.Column<string>(type: "TEXT", nullable: true),
-                    BookSourceId = table.Column<string>(type: "TEXT", nullable: true)
+                    BookSourceId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SourceCatalogRules", x => x.CatalogRuleId);
+                    table.PrimaryKey("PK_SourceCatalogRule", x => x.CatalogRuleId);
                     table.ForeignKey(
-                        name: "FK_SourceCatalogRules_BookSource_BookSourceId",
+                        name: "FK_SourceCatalogRule_BookSource_BookSourceId",
                         column: x => x.BookSourceId,
                         principalTable: "BookSource",
-                        principalColumn: "BookSourceId");
+                        principalColumn: "BookSourceId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SourceContentRules",
+                name: "SourceContentRule",
                 columns: table => new
                 {
                     ContentRuleId = table.Column<string>(type: "TEXT", nullable: false),
                     Content = table.Column<string>(type: "TEXT", nullable: true),
                     NextContent = table.Column<string>(type: "TEXT", nullable: true),
-                    BookSourceId = table.Column<string>(type: "TEXT", nullable: true)
+                    BookSourceId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SourceContentRules", x => x.ContentRuleId);
+                    table.PrimaryKey("PK_SourceContentRule", x => x.ContentRuleId);
                     table.ForeignKey(
-                        name: "FK_SourceContentRules_BookSource_BookSourceId",
+                        name: "FK_SourceContentRule_BookSource_BookSourceId",
                         column: x => x.BookSourceId,
                         principalTable: "BookSource",
-                        principalColumn: "BookSourceId");
+                        principalColumn: "BookSourceId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,7 +142,7 @@ namespace ReaderSharp.Data.Migrations
                     CoverUrl = table.Column<string>(type: "TEXT", nullable: true),
                     WordCount = table.Column<string>(type: "TEXT", nullable: true),
                     LastChapter = table.Column<string>(type: "TEXT", nullable: true),
-                    BookSourceId = table.Column<string>(type: "TEXT", nullable: true)
+                    BookSourceId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,7 +151,8 @@ namespace ReaderSharp.Data.Migrations
                         name: "FK_SourceSearchRule_BookSource_BookSourceId",
                         column: x => x.BookSourceId,
                         principalTable: "BookSource",
-                        principalColumn: "BookSourceId");
+                        principalColumn: "BookSourceId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,22 +161,17 @@ namespace ReaderSharp.Data.Migrations
                 {
                     ParagraphId = table.Column<string>(type: "TEXT", nullable: false),
                     Content = table.Column<string>(type: "TEXT", nullable: true),
-                    BookId = table.Column<string>(type: "TEXT", nullable: true),
-                    ChapterId = table.Column<string>(type: "TEXT", nullable: true)
+                    ChapterId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BookParagraph", x => x.ParagraphId);
                     table.ForeignKey(
-                        name: "FK_BookParagraph_Book_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Book",
-                        principalColumn: "BookId");
-                    table.ForeignKey(
                         name: "FK_BookParagraph_BookChapter_ChapterId",
                         column: x => x.ChapterId,
                         principalTable: "BookChapter",
-                        principalColumn: "ChapterId");
+                        principalColumn: "ChapterId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -177,30 +180,25 @@ namespace ReaderSharp.Data.Migrations
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookParagraph_BookId",
-                table: "BookParagraph",
-                column: "BookId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BookParagraph_ChapterId",
                 table: "BookParagraph",
                 column: "ChapterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SourceBookInfoRules_BookSourceId",
-                table: "SourceBookInfoRules",
+                name: "IX_SourceBookInfoRule_BookSourceId",
+                table: "SourceBookInfoRule",
                 column: "BookSourceId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SourceCatalogRules_BookSourceId",
-                table: "SourceCatalogRules",
+                name: "IX_SourceCatalogRule_BookSourceId",
+                table: "SourceCatalogRule",
                 column: "BookSourceId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SourceContentRules_BookSourceId",
-                table: "SourceContentRules",
+                name: "IX_SourceContentRule_BookSourceId",
+                table: "SourceContentRule",
                 column: "BookSourceId",
                 unique: true);
 
@@ -217,13 +215,13 @@ namespace ReaderSharp.Data.Migrations
                 name: "BookParagraph");
 
             migrationBuilder.DropTable(
-                name: "SourceBookInfoRules");
+                name: "SourceBookInfoRule");
 
             migrationBuilder.DropTable(
-                name: "SourceCatalogRules");
+                name: "SourceCatalogRule");
 
             migrationBuilder.DropTable(
-                name: "SourceContentRules");
+                name: "SourceContentRule");
 
             migrationBuilder.DropTable(
                 name: "SourceSearchRule");

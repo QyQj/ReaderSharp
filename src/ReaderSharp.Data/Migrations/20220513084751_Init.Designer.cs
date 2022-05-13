@@ -11,8 +11,8 @@ using ReaderSharp.Data;
 namespace ReaderSharp.Data.Migrations
 {
     [DbContext(typeof(ReaderDbContext))]
-    [Migration("20220509023733_AlterSearchRuleTableName")]
-    partial class AlterSearchRuleTableName
+    [Migration("20220513084751_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,7 @@ namespace ReaderSharp.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BookId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CatalogIndex")
@@ -67,18 +68,14 @@ namespace ReaderSharp.Data.Migrations
                     b.Property<string>("ParagraphId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("BookId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("ChapterId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ParagraphId");
-
-                    b.HasIndex("BookId");
 
                     b.HasIndex("ChapterId");
 
@@ -122,6 +119,7 @@ namespace ReaderSharp.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BookSourceId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CatalogUrl")
@@ -144,7 +142,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceBookInfoRules");
+                    b.ToTable("SourceBookInfoRule");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceCatalogRule", b =>
@@ -153,6 +151,7 @@ namespace ReaderSharp.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BookSourceId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ChapterList")
@@ -178,7 +177,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceCatalogRules");
+                    b.ToTable("SourceCatalogRule");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceContentRule", b =>
@@ -187,6 +186,7 @@ namespace ReaderSharp.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BookSourceId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Content")
@@ -200,7 +200,7 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceContentRules");
+                    b.ToTable("SourceContentRule");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.SourceSearchRule", b =>
@@ -218,6 +218,7 @@ namespace ReaderSharp.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BookSourceId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BookUrl")
@@ -240,29 +241,27 @@ namespace ReaderSharp.Data.Migrations
                     b.HasIndex("BookSourceId")
                         .IsUnique();
 
-                    b.ToTable("SourceSearchRules");
+                    b.ToTable("SourceSearchRule");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.BookChapter", b =>
                 {
                     b.HasOne("ReaderSharp.Models.Entities.Book", "Book")
                         .WithMany("Chapters")
-                        .HasForeignKey("BookId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Book");
                 });
 
             modelBuilder.Entity("ReaderSharp.Models.Entities.BookParagraph", b =>
                 {
-                    b.HasOne("ReaderSharp.Models.Entities.Book", "Book")
-                        .WithMany("Paragraphs")
-                        .HasForeignKey("BookId");
-
                     b.HasOne("ReaderSharp.Models.Entities.BookChapter", "Chapter")
-                        .WithMany()
-                        .HasForeignKey("ChapterId");
-
-                    b.Navigation("Book");
+                        .WithMany("Paragraphs")
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Chapter");
                 });
@@ -271,7 +270,9 @@ namespace ReaderSharp.Data.Migrations
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
                         .WithOne("BookInfoRule")
-                        .HasForeignKey("ReaderSharp.Models.Entities.SourceBookInfoRule", "BookSourceId");
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceBookInfoRule", "BookSourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BookSource");
                 });
@@ -280,7 +281,9 @@ namespace ReaderSharp.Data.Migrations
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
                         .WithOne("CatalogRule")
-                        .HasForeignKey("ReaderSharp.Models.Entities.SourceCatalogRule", "BookSourceId");
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceCatalogRule", "BookSourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BookSource");
                 });
@@ -289,7 +292,9 @@ namespace ReaderSharp.Data.Migrations
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
                         .WithOne("ContentRule")
-                        .HasForeignKey("ReaderSharp.Models.Entities.SourceContentRule", "BookSourceId");
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceContentRule", "BookSourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BookSource");
                 });
@@ -298,7 +303,9 @@ namespace ReaderSharp.Data.Migrations
                 {
                     b.HasOne("ReaderSharp.Models.Entities.BookSource", "BookSource")
                         .WithOne("SearchRule")
-                        .HasForeignKey("ReaderSharp.Models.Entities.SourceSearchRule", "BookSourceId");
+                        .HasForeignKey("ReaderSharp.Models.Entities.SourceSearchRule", "BookSourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BookSource");
                 });
@@ -306,7 +313,10 @@ namespace ReaderSharp.Data.Migrations
             modelBuilder.Entity("ReaderSharp.Models.Entities.Book", b =>
                 {
                     b.Navigation("Chapters");
+                });
 
+            modelBuilder.Entity("ReaderSharp.Models.Entities.BookChapter", b =>
+                {
                     b.Navigation("Paragraphs");
                 });
 

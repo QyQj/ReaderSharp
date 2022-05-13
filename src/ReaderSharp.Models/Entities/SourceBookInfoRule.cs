@@ -23,6 +23,7 @@ namespace ReaderSharp.Models.Entities
 
         public string WordCount { get; set; }
 
+        [Required]
         public string BookSourceId { get; set; }
 
         public BookSource BookSource { get; set; }

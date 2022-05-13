@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReaderSharp.Models.Entities
@@ -16,6 +17,9 @@ namespace ReaderSharp.Models.Entities
 
         public int CatalogIndex { get; set; }
 
+        public IEnumerable<BookParagraph> Paragraphs { get; set; }
+
+        [Required]
         public string BookId { get; set; }
 
         public Book Book { get; set; }

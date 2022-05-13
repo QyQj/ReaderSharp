@@ -23,7 +23,5 @@ namespace ReaderSharp.Models.Entities
         public byte[] Picture { get; set; }
 
         public IEnumerable<BookChapter> Chapters { get; set; }
-
-        public IEnumerable<BookParagraph> Paragraphs { get; set; }
     }
 }
