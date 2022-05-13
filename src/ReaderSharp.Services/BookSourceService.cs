@@ -24,10 +24,26 @@ namespace ReaderSharp.Services
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<ImportBookSourceDto>>> GetBookSource()
+        {
+            var sources = await _manager.GetBookSource();
+            return Ok(_mapper.Map<List<ImportBookSourceDto>>(sources));
+        }
+
+
+        [HttpPost]
         public async Task<IActionResult> ImportBookSource([FromBody] List<ImportBookSourceDto> sources)
         {
             var convertedSources = _mapper.Map<List<BookSource>>(sources);
             await _manager.ImportBookSource(convertedSources);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBookSource([FromBody] List<string> baseUrls)
+        {
+            await _manager.DeleteBookSource(baseUrls);
             return Ok();
         }
     }

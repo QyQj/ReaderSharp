@@ -12,22 +12,26 @@ namespace ReaderSharp.Services.MapperProfile
             CreateMap<ImportBookInfoRuleDto, SourceBookInfoRule>()
                 .ForMember(dest => dest.BookInfoRuleId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.BookSourceId, opt => opt.Ignore())
-                .ForMember(dest => dest.BookSource, opt => opt.Ignore());
+                .ForMember(dest => dest.BookSource, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<ImportCatalogRuleDto, SourceCatalogRule>()
                 .ForMember(dest => dest.CatalogRuleId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.BookSourceId, opt => opt.Ignore())
-                .ForMember(dest => dest.BookSource, opt => opt.Ignore());
+                .ForMember(dest => dest.BookSource, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<ImportContentRuleDto, SourceContentRule>()
                 .ForMember(dest => dest.ContentRuleId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.BookSourceId, opt => opt.Ignore())
-                .ForMember(dest => dest.BookSource, opt => opt.Ignore());
+                .ForMember(dest => dest.BookSource, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<ImportSearchRuleDto, SourceSearchRule>()
                 .ForMember(dest => dest.SearchRuleId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.BookSourceId, opt => opt.Ignore())
-                .ForMember(dest => dest.BookSource, opt => opt.Ignore());
+                .ForMember(dest => dest.BookSource, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<ImportBookSourceDto, BookSource>()
                 .ForMember(dest => dest.BookSourceId, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
@@ -38,7 +42,8 @@ namespace ReaderSharp.Services.MapperProfile
                 .ForMember(dest => dest.BookInfoRule, opt => opt.MapFrom(src => src.BookInfoRule))
                 .ForMember(dest => dest.CatalogRule, opt => opt.MapFrom(src => src.CatalogRule))
                 .ForMember(dest => dest.ContentRule, opt => opt.MapFrom(src => src.ContentRule))
-                .ForMember(dest => dest.SearchRule, opt => opt.MapFrom(src => src.SearchRule));
+                .ForMember(dest => dest.SearchRule, opt => opt.MapFrom(src => src.SearchRule))
+                .ReverseMap();
         }
     }
 }
