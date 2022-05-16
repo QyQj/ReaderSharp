@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Data", "ReaderS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Models", "ReaderSharp.Models\ReaderSharp.Models.csproj", "{258BEC6B-0956-4913-BC5B-3400378AF6FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReaderSharp.WebAssembly", "ReaderSharp.WebAssembly\ReaderSharp.WebAssembly.csproj", "{499EC784-3A12-405C-A9C0-0A8931452696}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{258BEC6B-0956-4913-BC5B-3400378AF6FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258BEC6B-0956-4913-BC5B-3400378AF6FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{258BEC6B-0956-4913-BC5B-3400378AF6FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499EC784-3A12-405C-A9C0-0A8931452696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499EC784-3A12-405C-A9C0-0A8931452696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499EC784-3A12-405C-A9C0-0A8931452696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499EC784-3A12-405C-A9C0-0A8931452696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

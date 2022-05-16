@@ -25,7 +25,7 @@ namespace ReaderSharp.Services
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ImportBookSourceDto>>> GetBookSource()
+        public async Task<ActionResult<List<ImportBookSourceDto>>> Get()
         {
             var sources = await _manager.GetBookSource();
             return Ok(_mapper.Map<List<ImportBookSourceDto>>(sources));
@@ -33,7 +33,7 @@ namespace ReaderSharp.Services
 
 
         [HttpPost]
-        public async Task<IActionResult> ImportBookSource([FromBody] List<ImportBookSourceDto> sources)
+        public async Task<IActionResult> Import([FromBody] List<ImportBookSourceDto> sources)
         {
             var convertedSources = _mapper.Map<List<BookSource>>(sources);
             await _manager.ImportBookSource(convertedSources);
@@ -41,7 +41,7 @@ namespace ReaderSharp.Services
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteBookSource([FromBody] List<string> baseUrls)
+        public async Task<IActionResult> Delete([FromBody] List<string> baseUrls)
         {
             await _manager.DeleteBookSource(baseUrls);
             return Ok();

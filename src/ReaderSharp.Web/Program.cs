@@ -11,12 +11,13 @@ using ReaderSharp.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddControllers()
+    .AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
     });
+builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ReaderDbContext>(options =>
@@ -34,6 +35,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseWebAssemblyDebugging();
 }
 
 app.UseDynamicWebApi((serviceProvider, options) =>
@@ -41,6 +43,13 @@ app.UseDynamicWebApi((serviceProvider, options) =>
     options.GetRestFulActionName = (actionName) => actionName;
 });
 
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+
+app.UseRouting();
+app.MapRazorPages();
 app.MapControllers();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
