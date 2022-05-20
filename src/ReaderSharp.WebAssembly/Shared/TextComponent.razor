@@ -1,20 +1,32 @@
-﻿<MudContainer Class="reader-sharp-paragraph">
+﻿@using MudBlazor.Services
+@using ReaderSharp.WebAssembly.Models
+@inject IJSRuntime JsRuntime
+
+<MudContainer>
     @for (int i = 0; i < ParagraphList.Count; i++)
     {
-        <p>@ParagraphList[i]</p>
+        <p class="reader-sharp-paragraph">@ParagraphList[i]</p>
     }
 </MudContainer>
 
-
-<MudTextField Label="字体大小" Variant="Variant.Outlined" T="string" @bind-Value="FontSize"></MudTextField>
-
-<MudTextField Label="字重" Variant="Variant.Outlined" T="int" @bind-Value="FontWeight"></MudTextField>
-
-<MudTextField Label="行高" Variant="Variant.Outlined" T="int" @bind-Value="LineHeight"></MudTextField>
-
-<MudTextField Label="段落上边距" Variant="Variant.Outlined" T="string" @bind-Value="ParagraphTopMargin"></MudTextField>
-
-<MudTextField Label="段落下边距" Variant="Variant.Outlined" T="string" @bind-Value="ParagraphBottomMargin"></MudTextField>
+<MudSlider T="double" @bind-Value="@FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
+    字体大小
+</MudSlider>
+<MudSlider T="int" @bind-Value="@FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
+    字重
+</MudSlider>
+<MudSlider T="double" @bind-Value="@LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
+    行高
+</MudSlider>
+<MudSlider T="int" @bind-Value="@TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
+    首行缩进
+</MudSlider>
+<MudSlider T="double" @bind-Value="@ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="8" Max="128">
+    段落上边距
+</MudSlider>
+<MudSlider T="double" @bind-Value="@ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="8" Max="128">
+    段落下边距
+</MudSlider>
 
 @code
 {
@@ -51,20 +63,20 @@
 
     public string FontFamily { get; set; } = "SimSun";
 
-    private string _fontSize = "16px";
-
-    public string FontSize
+    private string _fontSizePX = "16px";
+    private double _fontSize = 16;
+    public double FontSize
     {
-        get => _fontSize.Substring(0, _fontSize.Length - 2);
+        get => _fontSize;
         set
         {
-            _fontSize = value + "px";
+            _fontSize = value;
+            _fontSizePX = value + "px";
             StateHasChanged();
         }
     }
 
     private int _fontWeight = 100;
-
     public int FontWeight
     {
         get => _fontWeight;
@@ -75,9 +87,8 @@
         }
     }
 
-    private int _lineHeight = 2;
-
-    public int LineHeight
+    private double _lineHeight = 2;
+    public double LineHeight
     {
         get => _lineHeight;
         set
@@ -87,52 +98,62 @@
         }
     }
 
-    private string _paragraphTopMargin = "8px";
-
-    public string ParagraphTopMargin
+    private string _paragraphTopMarginPX = "8px";
+    private double _paragraphTopMargin = 8;
+    public double ParagraphTopMargin
     {
-        get => _paragraphTopMargin.Substring(0, _paragraphTopMargin.Length - 2);
+        get => _paragraphTopMargin;
         set
         {
-            _paragraphTopMargin = value + "px";
+            _paragraphTopMargin = value;
+            _paragraphTopMarginPX = value + "px";
             StateHasChanged();
         }
     }
 
-    private string _paragraphBottomMargin = "8px";
-
-    public string ParagraphBottomMargin
+    private string _paragraphBottomMarginPX = "8px";
+    private double _paragraphBottomMargin = 8;
+    public double ParagraphBottomMargin
     {
-        get => _paragraphBottomMargin.Substring(0, _paragraphBottomMargin.Length - 2);
+        get => _paragraphBottomMargin;
         set
         {
-            _paragraphBottomMargin = value + "px";
+            _paragraphBottomMargin = value;
+            _paragraphBottomMarginPX = value + "px";
             StateHasChanged();
         }
     }
 
-    private string _textIndent = "2em";
-
-    public string TextIndent
+    private string _textIndentEM = "2em";
+    private int _textIndent = 2;
+    public int TextIndent
     {
-        get => _textIndent.Substring(0, _textIndent.Length - 2);
+        get => _textIndent;
         set
         {
-            _textIndent = value + "em";
+            _textIndent = value;
+            _textIndentEM = value + "em";
             StateHasChanged();
         }
+    }
+
+    public HtmlSize HtmlSize { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        HtmlSize = await JsRuntime.InvokeAsync<HtmlSize>("getScreenSize");
     }
 }
 
 <style>
     .reader-sharp-paragraph {
         font-family: @FontFamily;
-        font-size: @_fontSize;
+        font-size: @_fontSizePX;
         font-weight: @FontWeight;
         line-height: @LineHeight;
-        margin-top: @_paragraphTopMargin;
-        margin-bottom: @_paragraphTopMargin;
-        text-indent: @_textIndent;
+        margin-top: @_paragraphTopMarginPX;
+        margin-bottom: @_paragraphTopMarginPX;
+        text-indent: @_textIndentEM;
     }
 
 </style>
