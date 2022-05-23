@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Web", "ReaderSharp.Web\ReaderSharp.Web.csproj", "{E7EA2DB6-7EF6-4156-8032-69733894374C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Web.Host", "ReaderSharp.Web.Host\ReaderSharp.Web.Host.csproj", "{E7EA2DB6-7EF6-4156-8032-69733894374C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Services", "ReaderSharp.Services\ReaderSharp.Services.csproj", "{797794E1-DB8A-4CCF-8AE2-81AEBAC0BE52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Web.API.Services", "ReaderSharp.Web.API.Services\ReaderSharp.Web.API.Services.csproj", "{797794E1-DB8A-4CCF-8AE2-81AEBAC0BE52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Data", "ReaderSharp.Data\ReaderSharp.Data.csproj", "{77495A41-815E-4ABF-B2D7-ECD4BB761F8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Web.Data", "ReaderSharp.Web.Data\ReaderSharp.Web.Data.csproj", "{77495A41-815E-4ABF-B2D7-ECD4BB761F8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Models", "ReaderSharp.Models\ReaderSharp.Models.csproj", "{258BEC6B-0956-4913-BC5B-3400378AF6FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Web.API.Models", "ReaderSharp.Web.API.Models\ReaderSharp.Web.API.Models.csproj", "{258BEC6B-0956-4913-BC5B-3400378AF6FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.WebAssembly", "ReaderSharp.WebAssembly\ReaderSharp.WebAssembly.csproj", "{499EC784-3A12-405C-A9C0-0A8931452696}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReaderSharp.Client.WebAssembly", "ReaderSharp.Client.WebAssembly\ReaderSharp.Client.WebAssembly.csproj", "{499EC784-3A12-405C-A9C0-0A8931452696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
