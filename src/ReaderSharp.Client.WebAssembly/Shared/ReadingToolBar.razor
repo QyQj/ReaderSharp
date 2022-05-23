@@ -1,0 +1,26 @@
+﻿<MudPaper Class="reader-sharp-readingToolBar">
+    <MudButton OnClick="ShowAppBar">ShowAppBar</MudButton>
+    <MudButton OnClick="HideAppBar">HideAppBar</MudButton>
+</MudPaper>
+@code
+{
+    [CascadingParameter(Name = "MainLayout")]
+    public MainLayout MainLayout { get; set; }
+
+    private void ShowAppBar()
+    {
+        MainLayout.ShowAppBar();
+    }
+
+    private void HideAppBar()
+    {
+        MainLayout.HideAppBar();
+    }
+}
+<style>
+    .reader-sharp-readingToolBar {
+        height: 400px;
+        width: 60px;
+        position: fixed;
+    }
+</style>

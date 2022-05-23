@@ -1,24 +1,11 @@
 ﻿@page "/reading"
 
-<h3>Reading</h3>
-<MudButton OnClick="ShowAppBar">ShowAppBar</MudButton>
-
-<MudButton OnClick="HideAppBar">HideAppBar</MudButton>
-
-<TextComponent></TextComponent>
+<MudContainer Class="d-flex flex-row">
+    <ReadingToolBar></ReadingToolBar>
+    <TextComponent></TextComponent>
+</MudContainer>
 
 @code
 {
-    [CascadingParameter(Name = "MainLayout")]
-    public MainLayout MainLayout { get; set; }
 
-    private void ShowAppBar()
-    {
-        MainLayout.ShowAppBar();
-    }
-
-    private void HideAppBar()
-    {
-        MainLayout.HideAppBar();
-    }
 }

@@ -1,33 +1,30 @@
-﻿@using MudBlazor.Services
-@using ReaderSharp.Client.WebAssembly.Models
+﻿@using ReaderSharp.Client.WebAssembly.Models
 @inject IJSRuntime JsRuntime
 
-<MudContainer>
+<MudContainer Class="border-x-2 border-solid mud-border-primary d-flex flex-column reader-sharp-textContainer">
     @for (int i = 0; i < ParagraphList.Count; i++)
     {
         <p class="reader-sharp-paragraph">@ParagraphList[i]</p>
     }
+    <MudSlider T="double" @bind-Value="@FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
+        字体大小
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
+        字重
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
+        行高
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
+        首行缩进
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
+        段落上边距
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
+        段落下边距
+    </MudSlider>
 </MudContainer>
-
-<MudSlider T="double" @bind-Value="@FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
-    字体大小
-</MudSlider>
-<MudSlider T="int" @bind-Value="@FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
-    字重
-</MudSlider>
-<MudSlider T="double" @bind-Value="@LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
-    行高
-</MudSlider>
-<MudSlider T="int" @bind-Value="@TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
-    首行缩进
-</MudSlider>
-<MudSlider T="double" @bind-Value="@ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="8" Max="128">
-    段落上边距
-</MudSlider>
-<MudSlider T="double" @bind-Value="@ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="8" Max="128">
-    段落下边距
-</MudSlider>
-
 @code
 {
     public List<string> ParagraphList = new List<string>
@@ -137,11 +134,24 @@
         }
     }
 
-    public HtmlSize HtmlSize { get; set; }
+    private string _containerWidthPX = "1000px";
+    private int _containerWidth = 1000;
+    public int ContainerWidth
+    {
+        get => _containerWidth;
+        set
+        {
+            _containerWidth = value;
+            _containerWidthPX = value + "px";
+            StateHasChanged();
+        }
+    }
+
+    public BodySize BodySize { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        HtmlSize = await JsRuntime.InvokeAsync<HtmlSize>("getScreenSize");
+        BodySize = await JsRuntime.InvokeAsync<BodySize>("getBodySize");
     }
 }
 
@@ -156,4 +166,7 @@
         text-indent: @_textIndentEM;
     }
 
+    .reader-sharp-textContainer {
+        width: @_containerWidthPX;
+    }
 </style>
