@@ -65,9 +65,28 @@
     }
 
     private bool _navMenuOpen = true;
-    void ChangeNavMenuStatus()
+    public void HideNavMenu()
     {
-        _navMenuOpen = !_navMenuOpen;
+        _navMenuOpen = false;
+        StateHasChanged();
+    }
+
+    public void ShowNavMenu()
+    {
+        _navMenuOpen = true;
+        StateHasChanged();
+    }
+
+    private void ChangeNavMenuStatus()
+    {
+        if (_navMenuOpen)
+        {
+            HideNavMenu();
+        }
+        else
+        {
+            ShowNavMenu();
+        }
     }
 
     public bool IsMobile { get; set; }

@@ -7,5 +7,10 @@
 
 @code
 {
+    [CascadingParameter(Name = "MainLayout")]
+    public MainLayout MainLayout { get; set; }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+    }
 }

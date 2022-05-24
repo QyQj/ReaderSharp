@@ -1,6 +1,6 @@
-﻿<MudPaper Class="reader-sharp-readingToolBar">
-    <MudButton OnClick="ShowAppBar">ShowAppBar</MudButton>
-    <MudButton OnClick="HideAppBar">HideAppBar</MudButton>
+﻿<MudPaper Class="reader-sharp-readingToolBar d-flex flex-column">
+    <MudIconButton OnClick="ShowAppBar" Icon="@Icons.Material.TwoTone.Menu" />
+    <MudIconButton OnClick="HideAppBar" Icon="@Icons.Material.TwoTone.MenuOpen" />
 </MudPaper>
 @code
 {
@@ -15,12 +15,13 @@
     private void HideAppBar()
     {
         MainLayout.HideAppBar();
+        MainLayout.HideNavMenu();
     }
 }
 <style>
     .reader-sharp-readingToolBar {
         height: 400px;
-        width: 60px;
+        width: auto;
         position: fixed;
     }
 </style>
