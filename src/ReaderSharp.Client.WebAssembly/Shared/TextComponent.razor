@@ -1,30 +1,21 @@
 ﻿@using ReaderSharp.Client.WebAssembly.Models
+@using System.Runtime.CompilerServices
 @inject IJSRuntime JsRuntime
 
-<MudContainer Class="border-x-2 border-solid mud-border-primary d-flex flex-column reader-sharp-textContainer">
+<MudContainer Class="d-flex flex-column reader-sharp-textContainer">
+    <MudDrawer @bind-Open="_settingPanelOpen" Elevation="1" Anchor="Anchor.Bottom" Variant="DrawerVariant.Temporary" Class="reader-sharp-readingSetting">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">页面设置</MudText>
+        </MudDrawerHeader>
+        <ReadingPageSetting Component="this" />
+    </MudDrawer>
+    <MudButton OnClick="ChangeSettingPanelStatus">设置</MudButton>
     @for (int i = 0; i < ParagraphList.Count; i++)
     {
         <p class="reader-sharp-paragraph">@ParagraphList[i]</p>
     }
-    <MudSlider T="double" @bind-Value="@FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
-        字体大小
-    </MudSlider>
-    <MudSlider T="int" @bind-Value="@FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
-        字重
-    </MudSlider>
-    <MudSlider T="double" @bind-Value="@LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
-        行高
-    </MudSlider>
-    <MudSlider T="int" @bind-Value="@TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
-        首行缩进
-    </MudSlider>
-    <MudSlider T="double" @bind-Value="@ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
-        段落上边距
-    </MudSlider>
-    <MudSlider T="double" @bind-Value="@ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
-        段落下边距
-    </MudSlider>
 </MudContainer>
+
 @code
 {
     public List<string> ParagraphList = new List<string>
@@ -58,7 +49,50 @@
         "至于退役之后，赚钱就更难。许景明虽然也是世界级武道高手，但世界武道大赛，他最高也只是八强罢了。格斗界收入是成金字塔形的，塔尖的是极少极少数！排名第一的收入高得夸张，第二第三第四……会直线下滑。"
     };
 
+    #region 设置面板控制
+
+    private bool _settingPanelOpen = false;
+    public void HideSettingPanel()
+    {
+        _settingPanelOpen = false;
+        StateHasChanged();
+    }
+
+    public void ShowSettingPanel()
+    {
+        _settingPanelOpen = true;
+        StateHasChanged();
+    }
+
+    private void ChangeSettingPanelStatus()
+    {
+        if (_settingPanelOpen)
+        {
+            HideSettingPanel();
+        }
+        else
+        {
+            ShowSettingPanel();
+        }
+    }
+
+    #endregion
+
+    #region 页面设置属性
+
     public string FontFamily { get; set; } = "SimSun";
+
+    private string _backgroundColor = "#FFFFFF";
+
+    public string BackgroundColor
+    {
+        get => _backgroundColor;
+        set
+        {
+            _backgroundColor = value;
+            StateHasChanged();
+        }
+    }
 
     private string _fontSizePX = "16px";
     private double _fontSize = 16;
@@ -147,6 +181,34 @@
         }
     }
 
+    private string _textComponentLeftPaddingPX = "8px";
+    private double _textComponentLeftPadding = 8;
+    public double TextComponentLeftPadding
+    {
+        get => _textComponentLeftPadding;
+        set
+        {
+            _textComponentLeftPadding = value;
+            _textComponentLeftPaddingPX = value + "px";
+            StateHasChanged();
+        }
+    }
+
+    private string _textComponentRightPaddingPX = "8px";
+    private double _textComponentRightPadding = 8;
+    public double TextComponentRightPadding
+    {
+        get => _textComponentRightPadding;
+        set
+        {
+            _textComponentRightPadding = value;
+            _textComponentRightPaddingPX = value + "px";
+            StateHasChanged();
+        }
+    }
+
+    #endregion
+
     public BodySize BodySize { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -168,5 +230,16 @@
 
     .reader-sharp-textContainer {
         width: @_containerWidthPX;
+        padding-left: @_textComponentLeftPaddingPX;
+        padding-right: @_textComponentRightPaddingPX;
+        background: @_backgroundColor;
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-style: solid;
+        border-color: black;
+    }
+
+    .reader-sharp-readingSetting {
+        max-height: 75%;
     }
 </style>

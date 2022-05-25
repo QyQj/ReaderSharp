@@ -1,0 +1,65 @@
+﻿@page "/bookshelf"
+@inject NavigationManager NavigationManager
+
+<PageTitle>书架</PageTitle>
+<MudAppBar Elevation="0">
+    <MudIconButton Icon="@Icons.Material.TwoTone.Menu" Edge="Edge.Start" OnClick="@((e) => ChangeNavMenuStatus())" />
+    <MudSpacer />
+    <MudIconButton Icon="@Icons.Material.TwoTone.Search" />
+</MudAppBar>
+<MudDrawer @bind-Open="_navMenuOpen" Elevation="1">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">ReaderSharp</MudText>
+    </MudDrawerHeader>
+    <NavMenu />
+</MudDrawer>
+<MudMainContent>
+    <MudContainer MaxWidth="MaxWidth.Large" Class="pt-4">
+        <MudGrid Justify="Justify.FlexStart" Class="pr-3">
+            @for (int i = 0; i < 6; i++)
+            {
+                int localindex = i;
+                <MudItem xs="4" lg="2" @onclick="Read">
+                    <MudPaper Class="d-flex flex-column align-center justify-center mud-width-full">
+                        <MudBadge Content="456" Color="Color.Error" Overlap="true" Max="9999">
+                            <MudImage Fluid="true" ObjectFit="ObjectFit.Cover" Src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew13.photophoto.cn%2F20190330%2Fjianyuebiankuangfencengbeijing-32943868_1.jpg&refer=http%3A%2F%2Fpicnew13.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655360007&t=f3d1a7a4835cbe335bf6ea2f62e875da" />
+                        </MudBadge>
+                        <MudText>这是一本书</MudText>
+                    </MudPaper>
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
+</MudMainContent>
+@code
+{
+    private bool _navMenuOpen = true;
+    public void HideNavMenu()
+    {
+        _navMenuOpen = false;
+        StateHasChanged();
+    }
+
+    public void ShowNavMenu()
+    {
+        _navMenuOpen = true;
+        StateHasChanged();
+    }
+
+    private void ChangeNavMenuStatus()
+    {
+        if (_navMenuOpen)
+        {
+            HideNavMenu();
+        }
+        else
+        {
+            ShowNavMenu();
+        }
+    }
+
+    private void Read()
+    {
+        NavigationManager.NavigateTo("/reading");
+    }
+}

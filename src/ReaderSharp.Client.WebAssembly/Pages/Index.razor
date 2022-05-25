@@ -5,25 +5,28 @@
 
 
 <MudGrid Justify="Justify.FlexStart" Class="pr-3">
-    @for (int i = 0; i < 6; i++)
-    {
-        int localindex = i;
-        <MudItem xs="4" lg="2" @onclick="Read">
-            <MudPaper Class="d-flex flex-column align-center justify-center mud-width-full">
-                <MudBadge Content="456" Color="Color.Error" Overlap="true" Max="9999">
-                    <MudImage Fluid="true" ObjectFit="ObjectFit.Cover" Src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpicnew13.photophoto.cn%2F20190330%2Fjianyuebiankuangfencengbeijing-32943868_1.jpg&refer=http%3A%2F%2Fpicnew13.photophoto.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655360007&t=f3d1a7a4835cbe335bf6ea2f62e875da" />
-                </MudBadge>
-                <MudText>123321</MudText>
-            </MudPaper>
-        </MudItem>
-    }
+    <MudItem xs="4" lg="2">
+        <MudPaper Class="d-flex flex-column align-center justify-center mud-width-full" @onclick="Read">
+            书架
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="4" lg="2">
+        <MudPaper Class="d-flex flex-column align-center justify-center mud-width-full">
+            书源
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="4" lg="2">
+        <MudPaper Class="d-flex flex-column align-center justify-center mud-width-full">
+            设置
+        </MudPaper>
+    </MudItem>
 </MudGrid>
 
 
 @code
 {
-    private void Read()
+    private void Read(MouseEventArgs obj)
     {
-        NavigationManager.NavigateTo("/reading");
+        NavigationManager.NavigateTo("/bookshelf");
     }
 }

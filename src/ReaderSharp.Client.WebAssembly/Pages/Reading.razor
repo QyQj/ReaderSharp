@@ -1,16 +1,15 @@
 ﻿@page "/reading"
 
-<MudContainer Class="d-flex flex-row">
-    <ReadingToolBar></ReadingToolBar>
-    <TextComponent></TextComponent>
+<MudContainer Class="d-flex flex-row px-0">
+    @if (!MainLayout.IsMobile)
+    {
+        <ReadingToolBar />
+    }
+    <TextComponent />
 </MudContainer>
 
 @code
 {
     [CascadingParameter(Name = "MainLayout")]
     public MainLayout MainLayout { get; set; }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-    }
 }

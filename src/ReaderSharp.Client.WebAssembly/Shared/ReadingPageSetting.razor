@@ -1,0 +1,35 @@
+﻿<MudContainer>
+    <MudSlider T="double" @bind-Value="@Component.FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
+        字体大小
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@Component.FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
+        字重
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@Component.LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
+        行高
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@Component.TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
+        首行缩进
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@Component.ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
+        段落上边距
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@Component.ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
+        段落下边距
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@Component.ContainerWidth" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="4000">
+        内容区域宽度
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@Component.TextComponentLeftPadding" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="32">
+        内容左边距
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@Component.TextComponentRightPadding" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="32">
+        内容右边距
+    </MudSlider>
+    <MudColorPicker @bind-Text="Component.BackgroundColor" Label="背景颜色" DisableAlpha="true" DisableToolbar="false" PickerVariant="PickerVariant.Inline" />
+</MudContainer>
+@code
+{
+    [Parameter]
+    public TextComponent Component { get; set; }
+}
