@@ -103,6 +103,7 @@
                         Height = BodySize.Height + "px"
                     };
                 IsMobile = await JsRuntime.InvokeAsync<bool>("isDevice");
+                _settingPanelOpen = false;
                 await InvokeAsync(StateHasChanged);
             }, new ResizeOptions
                 {
@@ -141,5 +142,9 @@
         height: @BodySizePX.Height;
         overflow: hidden;
         box-sizing: border-box;
+    }
+
+    .reader-sharp-readingSetting {
+        max-height: 75%;
     }
 </style>

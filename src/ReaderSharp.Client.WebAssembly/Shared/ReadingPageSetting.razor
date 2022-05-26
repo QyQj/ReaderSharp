@@ -3,42 +3,34 @@
 @using ReaderSharp.Client.WebAssembly.Models
 @using ReaderSharp.Client.WebAssembly.Pages
 <MudContainer Class="d-flex flex-column">
-    <MudContainer Class="d-flex flex-row gap-16">
-        <MudSlider T="double" @bind-Value="@ReadingSettings.FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
-            字体大小
-        </MudSlider>
-        <MudSlider T="int" @bind-Value="@ReadingSettings.FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
-            字重
-        </MudSlider>
-        <MudSlider T="double" @bind-Value="@ReadingSettings.LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
-            行高
-        </MudSlider>
-        <MudSlider T="int" @bind-Value="@ReadingSettings.TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
-            首行缩进
-        </MudSlider>
-    </MudContainer>
-    <MudContainer Class="d-flex flex-row gap-16">
-        <MudSlider T="double" @bind-Value="@ReadingSettings.ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
-            段落上边距
-        </MudSlider>
-        <MudSlider T="double" @bind-Value="@ReadingSettings.ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
-            段落下边距
-        </MudSlider>
-    </MudContainer>
-    <MudContainer Class="d-flex flex-row gap-16">
-        <MudSlider T="int" @bind-Value="@ReadingSettings.ContainerWidth" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="4000">
-            内容区域宽度
-        </MudSlider>
-        <MudSlider T="double" @bind-Value="@ReadingSettings.TextComponentLeftPadding" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="32">
-            内容左边距
-        </MudSlider>
-        <MudSlider T="double" @bind-Value="@ReadingSettings.TextComponentRightPadding" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="32">
-            内容右边距
-        </MudSlider>
-    </MudContainer>
-    <MudContainer Class="d-flex flex-row gap-16">
-        <MudColorPicker @bind-Text="ReadingSettings.BackgroundColor" Label="背景颜色" DisableAlpha="true" DisableToolbar="false" PickerVariant="PickerVariant.Inline" />
-    </MudContainer>
+    <MudSlider T="double" @bind-Value="@ReadingSettings.FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
+        字体大小
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@ReadingSettings.FontWeight" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="700">
+        字重
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ReadingSettings.LineHeight" ValueLabel="true" Variant="Variant.Filled" Step="0.1" Min="1" Max="8">
+        行高
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@ReadingSettings.TextIndent" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="0" Max="8">
+        首行缩进
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ReadingSettings.ParagraphTopMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
+        段落上边距
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ReadingSettings.ParagraphBottomMargin" ValueLabel="true" Variant="Variant.Filled" Step="2" Min="2" Max="64">
+        段落下边距
+    </MudSlider>
+    <MudSlider T="int" @bind-Value="@ReadingSettings.ContainerWidth" ValueLabel="true" Variant="Variant.Filled" Step="100" Min="100" Max="4000">
+        内容区域宽度
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ReadingSettings.TextComponentLeftPadding" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="32">
+        内容左边距
+    </MudSlider>
+    <MudSlider T="double" @bind-Value="@ReadingSettings.TextComponentRightPadding" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="32">
+        内容右边距
+    </MudSlider>
+    <MudColorPicker @bind-Text="ReadingSettings.BackgroundColor" Label="背景颜色" DisableAlpha="true" DisableToolbar="false" PickerVariant="PickerVariant.Inline" />
 </MudContainer>
 @code
 {
