@@ -1,15 +1,145 @@
 ﻿@page "/reading"
+@using MudBlazor.Services
+@using ReaderSharp.Client.WebAssembly.Models
+@implements IAsyncDisposable
+@inject IJSRuntime JsRuntime
 
-<MudContainer Class="d-flex flex-row px-0">
-    @if (!MainLayout.IsMobile)
-    {
-        <ReadingToolBar />
-    }
-    <TextComponent />
+<MudContainer Class="d-flex flex-row px-0 reader-sharp-readingContainer">
+    <CascadingValue Value="this" Name="Reading">
+        @if (!IsMobile)
+        {
+            <ReadingToolBar />
+        }
+        <MudDrawer @bind-Open="_settingPanelOpen" Elevation="1" Anchor="Anchor.Bottom" Variant="DrawerVariant.Temporary" Class="reader-sharp-readingSetting">
+            <MudDrawerHeader>
+                <MudText Typo="Typo.h6">页面设置</MudText>
+            </MudDrawerHeader>
+            <ReadingPageSetting ReadingSettings="ReadingSettings" />
+        </MudDrawer>
+        <TextComponent ReadingSettings="ReadingSettings" />
+    </CascadingValue>
 </MudContainer>
 
 @code
 {
-    [CascadingParameter(Name = "MainLayout")]
-    public MainLayout MainLayout { get; set; }
+
+    [Inject] IResizeService ResizeService { get; set; }
+
+    private Guid _subscriptionId;
+
+    public ReadingSettings ReadingSettings;
+
+    #region 设置面板显示控制
+
+    private bool _settingPanelOpen = false;
+    public void HideSettingPanel()
+    {
+        _settingPanelOpen = false;
+        StateHasChanged();
+    }
+
+    public void ShowSettingPanel()
+    {
+        _settingPanelOpen = true;
+        StateHasChanged();
+    }
+
+    private void ChangeSettingPanelStatus()
+    {
+        if (_settingPanelOpen)
+        {
+            HideSettingPanel();
+        }
+        else
+        {
+            ShowSettingPanel();
+        }
+    }
+
+    #endregion 设置面板显示控制
+
+    public bool IsMobile { get; set; }
+
+    public BodySize BodySize { get; set; }
+
+    private BodySizePX _bodySizePX = null;
+    public BodySizePX BodySizePX
+    {
+        get
+        {
+            if (_bodySizePX == null)
+            {
+                return new BodySizePX
+                    {
+                        Width = "1800px",
+                        Height = "800px"
+                    };
+            }
+            else
+            {
+                return _bodySizePX;
+            }
+        }
+        set
+        {
+            _bodySizePX = value;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _subscriptionId = await ResizeService.Subscribe(async (size) =>
+            {
+                BodySize = new BodySize
+                    {
+                        Width = size.Width,
+                        Height = size.Height
+                    };
+                BodySizePX = new BodySizePX
+                    {
+                        Width = BodySize.Width + "px",
+                        Height = BodySize.Height + "px"
+                    };
+                IsMobile = await JsRuntime.InvokeAsync<bool>("isDevice");
+                await InvokeAsync(StateHasChanged);
+            }, new ResizeOptions
+                {
+                    ReportRate = 50,
+                    NotifyOnBreakpointOnly = false,
+                });
+
+            var size = await ResizeService.GetBrowserWindowSize();
+            BodySize = new BodySize
+                {
+                    Width = size.Width,
+                    Height = size.Height
+                };
+            BodySizePX = new BodySizePX
+                {
+                    Width = BodySize.Width + "px",
+                    Height = BodySize.Height + "px"
+                };
+            IsMobile = await JsRuntime.InvokeAsync<bool>("isDevice");
+            StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override void OnParametersSet()
+    {
+        ReadingSettings = new ReadingSettings();
+        base.OnParametersSet();
+    }
+
+    public async ValueTask DisposeAsync() => await ResizeService.Unsubscribe(_subscriptionId);
 }
+
+<style>
+    .reader-sharp-readingContainer {
+        height: @BodySizePX.Height;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+</style>

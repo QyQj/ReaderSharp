@@ -1,23 +1,39 @@
 ﻿@using ReaderSharp.Client.WebAssembly.Models
 @using System.Runtime.CompilerServices
+@using ReaderSharp.Client.WebAssembly.Pages
 @inject IJSRuntime JsRuntime
 
-<MudContainer Class="d-flex flex-column reader-sharp-textContainer">
-    <MudDrawer @bind-Open="_settingPanelOpen" Elevation="1" Anchor="Anchor.Bottom" Variant="DrawerVariant.Temporary" Class="reader-sharp-readingSetting">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">页面设置</MudText>
-        </MudDrawerHeader>
-        <ReadingPageSetting Component="this" />
-    </MudDrawer>
-    <MudButton OnClick="ChangeSettingPanelStatus">设置</MudButton>
-    @for (int i = 0; i < ParagraphList.Count; i++)
+<MudContainer Class="px-0" Style="overflow: scroll">
+    @if (Reading.IsMobile)
     {
-        <p class="reader-sharp-paragraph">@ParagraphList[i]</p>
+        <MudContainer Class="d-flex flex-column reader-sharp-paragraphContainer-mobile">
+            @for (int i = 0; i < ParagraphList.Count; i++)
+            {
+                <p class="reader-sharp-paragraph">@ParagraphList[i]</p>
+            }
+        </MudContainer>
+    }
+    else
+    {
+        <MudContainer Class="d-flex flex-column reader-sharp-paragraphContainer">
+            @for (int i = 0; i < ParagraphList.Count; i++)
+            {
+                <p class="reader-sharp-paragraph">@ParagraphList[i]</p>
+            }
+        </MudContainer>
     }
 </MudContainer>
 
+
+
 @code
 {
+    [CascadingParameter(Name = "Reading")]
+    public Reading Reading { get; set; }
+
+    [Parameter]
+    public ReadingSettings ReadingSettings { get; set; }
+
     public List<string> ParagraphList = new List<string>
     {
         "蓝星2081年7月2日13:50，夏国最繁华城市‘滨海市’，此时乌云密布，雷声轰隆，眼看着一场暴雨要来。",
@@ -49,190 +65,49 @@
         "至于退役之后，赚钱就更难。许景明虽然也是世界级武道高手，但世界武道大赛，他最高也只是八强罢了。格斗界收入是成金字塔形的，塔尖的是极少极少数！排名第一的收入高得夸张，第二第三第四……会直线下滑。"
     };
 
-    #region 设置面板控制
 
-    private bool _settingPanelOpen = false;
-    public void HideSettingPanel()
+    protected override void OnAfterRender(bool firstRender)
     {
-        _settingPanelOpen = false;
+        if (firstRender)
+        {
+            ReadingSettings.ReadingSettingsChanged += OnReadingSettingsChanged;
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    public void OnReadingSettingsChanged(object source, EventArgs args)
+    {
         StateHasChanged();
-    }
-
-    public void ShowSettingPanel()
-    {
-        _settingPanelOpen = true;
-        StateHasChanged();
-    }
-
-    private void ChangeSettingPanelStatus()
-    {
-        if (_settingPanelOpen)
-        {
-            HideSettingPanel();
-        }
-        else
-        {
-            ShowSettingPanel();
-        }
-    }
-
-    #endregion
-
-    #region 页面设置属性
-
-    public string FontFamily { get; set; } = "SimSun";
-
-    private string _backgroundColor = "#FFFFFF";
-
-    public string BackgroundColor
-    {
-        get => _backgroundColor;
-        set
-        {
-            _backgroundColor = value;
-            StateHasChanged();
-        }
-    }
-
-    private string _fontSizePX = "16px";
-    private double _fontSize = 16;
-    public double FontSize
-    {
-        get => _fontSize;
-        set
-        {
-            _fontSize = value;
-            _fontSizePX = value + "px";
-            StateHasChanged();
-        }
-    }
-
-    private int _fontWeight = 100;
-    public int FontWeight
-    {
-        get => _fontWeight;
-        set
-        {
-            _fontWeight = value;
-            StateHasChanged();
-        }
-    }
-
-    private double _lineHeight = 2;
-    public double LineHeight
-    {
-        get => _lineHeight;
-        set
-        {
-            _lineHeight = value;
-            StateHasChanged();
-        }
-    }
-
-    private string _paragraphTopMarginPX = "8px";
-    private double _paragraphTopMargin = 8;
-    public double ParagraphTopMargin
-    {
-        get => _paragraphTopMargin;
-        set
-        {
-            _paragraphTopMargin = value;
-            _paragraphTopMarginPX = value + "px";
-            StateHasChanged();
-        }
-    }
-
-    private string _paragraphBottomMarginPX = "8px";
-    private double _paragraphBottomMargin = 8;
-    public double ParagraphBottomMargin
-    {
-        get => _paragraphBottomMargin;
-        set
-        {
-            _paragraphBottomMargin = value;
-            _paragraphBottomMarginPX = value + "px";
-            StateHasChanged();
-        }
-    }
-
-    private string _textIndentEM = "2em";
-    private int _textIndent = 2;
-    public int TextIndent
-    {
-        get => _textIndent;
-        set
-        {
-            _textIndent = value;
-            _textIndentEM = value + "em";
-            StateHasChanged();
-        }
-    }
-
-    private string _containerWidthPX = "1000px";
-    private int _containerWidth = 1000;
-    public int ContainerWidth
-    {
-        get => _containerWidth;
-        set
-        {
-            _containerWidth = value;
-            _containerWidthPX = value + "px";
-            StateHasChanged();
-        }
-    }
-
-    private string _textComponentLeftPaddingPX = "8px";
-    private double _textComponentLeftPadding = 8;
-    public double TextComponentLeftPadding
-    {
-        get => _textComponentLeftPadding;
-        set
-        {
-            _textComponentLeftPadding = value;
-            _textComponentLeftPaddingPX = value + "px";
-            StateHasChanged();
-        }
-    }
-
-    private string _textComponentRightPaddingPX = "8px";
-    private double _textComponentRightPadding = 8;
-    public double TextComponentRightPadding
-    {
-        get => _textComponentRightPadding;
-        set
-        {
-            _textComponentRightPadding = value;
-            _textComponentRightPaddingPX = value + "px";
-            StateHasChanged();
-        }
-    }
-
-    #endregion
-
-    public BodySize BodySize { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        BodySize = await JsRuntime.InvokeAsync<BodySize>("getBodySize");
     }
 }
 
 <style>
     .reader-sharp-paragraph {
-        font-family: @FontFamily;
-        font-size: @_fontSizePX;
-        font-weight: @FontWeight;
-        line-height: @LineHeight;
-        margin-top: @_paragraphTopMarginPX;
-        margin-bottom: @_paragraphTopMarginPX;
-        text-indent: @_textIndentEM;
+        font-family: @ReadingSettings.FontFamily;
+        font-size: @ReadingSettings._fontSizePX;
+        font-weight: @ReadingSettings.FontWeight;
+        line-height: @ReadingSettings.LineHeight;
+        margin-top: @ReadingSettings._paragraphTopMarginPX;
+        margin-bottom: @ReadingSettings._paragraphTopMarginPX;
+        text-indent: @ReadingSettings._textIndentEM;
     }
 
-    .reader-sharp-textContainer {
-        width: @_containerWidthPX;
-        padding-left: @_textComponentLeftPaddingPX;
-        padding-right: @_textComponentRightPaddingPX;
-        background: @_backgroundColor;
+    .reader-sharp-paragraphContainer {
+        width: @ReadingSettings._containerWidthPX;
+        padding-left: @ReadingSettings._textComponentLeftPaddingPX;
+        padding-right: @ReadingSettings._textComponentRightPaddingPX;
+        background: @ReadingSettings.BackgroundColor;
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-style: solid;
+        border-color: black;
+    }
+
+    .reader-sharp-paragraphContainer-mobile {
+        width: auto;
+        padding-left: @ReadingSettings._textComponentLeftPaddingPX;
+        padding-right: @ReadingSettings._textComponentRightPaddingPX;
+        background: @ReadingSettings.BackgroundColor;
         border-left-width: 1px;
         border-right-width: 1px;
         border-style: solid;

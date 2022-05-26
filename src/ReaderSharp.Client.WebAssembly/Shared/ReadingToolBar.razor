@@ -1,12 +1,20 @@
-﻿<MudPaper Class="reader-sharp-readingToolBar d-flex flex-column">
-    <MudIconButton Icon="@Icons.Material.TwoTone.Settings" />
+﻿@using ReaderSharp.Client.WebAssembly.Pages
+
+<MudPaper Class="reader-sharp-readingToolBar d-flex flex-column">
+    <MudIconButton Icon="@Icons.Material.TwoTone.Settings" OnClick="ShowSettingPanel" />
 </MudPaper>
 
 @code
 {
-    [CascadingParameter(Name = "MainLayout")]
-    public MainLayout MainLayout { get; set; }
+    [CascadingParameter(Name = "Reading")]
+    public Reading Reading { get; set; }
+
+    private void ShowSettingPanel(MouseEventArgs obj)
+    {
+        Reading.ShowSettingPanel();
+    }
 }
+
 <style>
     .reader-sharp-readingToolBar {
         height: 400px;

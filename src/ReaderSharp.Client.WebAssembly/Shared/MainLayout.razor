@@ -1,22 +1,14 @@
 ﻿@inherits LayoutComponentBase
-@inject IJSRuntime JsRuntime
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <CascadingValue Value="this" Name="MainLayout">
-        @Body
-    </CascadingValue>
+    @Body
 </MudLayout>
 
 @code
 {
-    public bool IsMobile { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        IsMobile = await JsRuntime.InvokeAsync<bool>("isDevice");
-    }
 }

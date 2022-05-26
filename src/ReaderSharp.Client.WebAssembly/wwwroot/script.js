@@ -1,7 +1,7 @@
 ﻿function getBodySize() {
     return {
-        Width: document.body.offsetWidth,
-        Height: document.body.offsetHeight
+        Width: screen.availWidth,
+        Height: screen.availHeight
     }
 }
 
