@@ -60,16 +60,16 @@
 
     public bool IsMobile { get; set; }
 
-    public BodySize BodySize { get; set; }
+    public AvailableSize BodySize { get; set; }
 
-    private BodySizePX _bodySizePX = null;
-    public BodySizePX BodySizePX
+    private AvailableSizePX _availableSizePx = null;
+    public AvailableSizePX AvailableSizePx
     {
         get
         {
-            if (_bodySizePX == null)
+            if (_availableSizePx == null)
             {
-                return new BodySizePX
+                return new AvailableSizePX
                     {
                         Width = "1800px",
                         Height = "800px"
@@ -77,12 +77,12 @@
             }
             else
             {
-                return _bodySizePX;
+                return _availableSizePx;
             }
         }
         set
         {
-            _bodySizePX = value;
+            _availableSizePx = value;
         }
     }
 
@@ -92,12 +92,12 @@
         {
             _subscriptionId = await ResizeService.Subscribe(async (size) =>
             {
-                BodySize = new BodySize
+                BodySize = new AvailableSize
                     {
                         Width = size.Width,
                         Height = size.Height
                     };
-                BodySizePX = new BodySizePX
+                AvailableSizePx = new AvailableSizePX
                     {
                         Width = BodySize.Width + "px",
                         Height = BodySize.Height + "px"
@@ -112,12 +112,12 @@
                 });
 
             var size = await ResizeService.GetBrowserWindowSize();
-            BodySize = new BodySize
+            BodySize = new AvailableSize
                 {
                     Width = size.Width,
                     Height = size.Height
                 };
-            BodySizePX = new BodySizePX
+            AvailableSizePx = new AvailableSizePX
                 {
                     Width = BodySize.Width + "px",
                     Height = BodySize.Height + "px"
@@ -128,10 +128,19 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         ReadingSettings = new ReadingSettings();
-        base.OnParametersSet();
+        var fonts = await JsRuntime.InvokeAsync<List<FontInfo>>("getAvailableFonts");
+        ReadingSettings.AvailableFonts.AddRange(fonts);
+        var defaultFont = new FontInfo
+            {
+                ZH = "系统默认",
+                EN = await JsRuntime.InvokeAsync<string>("getDefaultFont")
+            };
+        ReadingSettings.AvailableFonts.Add(defaultFont);
+        ReadingSettings.Font = defaultFont;
+        await base.OnParametersSetAsync();
     }
 
     public async ValueTask DisposeAsync() => await ResizeService.Unsubscribe(_subscriptionId);
@@ -139,7 +148,7 @@
 
 <style>
     .reader-sharp-readingContainer {
-        height: @BodySizePX.Height;
+        height: @AvailableSizePx.Height;
         overflow: hidden;
         box-sizing: border-box;
     }

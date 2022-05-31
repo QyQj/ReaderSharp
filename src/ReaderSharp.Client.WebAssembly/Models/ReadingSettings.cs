@@ -1,10 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ReaderSharp.Client.WebAssembly.Models
 {
     public class ReadingSettings
     {
-        public string FontFamily { get; set; } = "SimSun";
+        public ReadingSettings()
+        {
+            AvailableFonts = new List<FontInfo>();
+            _font = new FontInfo
+            {
+                ZH = "宋体",
+                EN = "SimSun"
+            };
+        }
+        public List<FontInfo> AvailableFonts { get; set; }
+
+        private FontInfo _font;
+        public FontInfo Font
+        {
+            get => _font;
+            set
+            {
+                _font = value;
+                StateHasChanged();
+            }
+        }
 
         private string _backgroundColor = "#FFFFFF";
 

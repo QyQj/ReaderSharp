@@ -3,6 +3,14 @@
 @using ReaderSharp.Client.WebAssembly.Models
 @using ReaderSharp.Client.WebAssembly.Pages
 <MudContainer Class="d-flex flex-column">
+    <MudSelect T="FontInfo" @bind-Value="ReadingSettings.Font" Label="字体">
+        @foreach (var font in ReadingSettings.AvailableFonts)
+        {
+            <MudSelectItem T="FontInfo" Value="@font">
+                <MudText>@font.ZH</MudText>
+            </MudSelectItem>
+        }
+    </MudSelect>
     <MudSlider T="double" @bind-Value="@ReadingSettings.FontSize" ValueLabel="true" Variant="Variant.Filled" Step="1" Min="1" Max="128">
         字体大小
     </MudSlider>
@@ -36,4 +44,10 @@
 {
     [Parameter]
     public ReadingSettings ReadingSettings { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        StateHasChanged();
+        base.OnParametersSet();
+    }
 }
