@@ -29,7 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ReaderSharp.Client.WebAssembly\ReaderSharp.Client.WebAssembly.csproj" />
 		<ProjectReference Include="..\ReaderSharp.Web.API.Services\ReaderSharp.Web.API.Services.csproj" />
 	</ItemGroup>
 

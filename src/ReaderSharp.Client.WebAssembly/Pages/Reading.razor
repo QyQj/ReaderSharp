@@ -1,8 +1,14 @@
 ﻿@page "/reading"
 @using MudBlazor.Services
+@using AutoMapper
+@using Blazored.LocalStorage
+@using Newtonsoft.Json
 @using ReaderSharp.Client.WebAssembly.Models
 @implements IAsyncDisposable
 @inject IJSRuntime JsRuntime
+@inject IResizeService ResizeService
+@inject IMapper Mapper
+@inject ILocalStorageService LocalStorage
 
 <MudContainer Class="d-flex flex-row px-0 reader-sharp-readingContainer">
     <CascadingValue Value="this" Name="Reading">
@@ -22,12 +28,10 @@
 
 @code
 {
-
-    [Inject] IResizeService ResizeService { get; set; }
-
     private Guid _subscriptionId;
 
-    public ReadingSettings ReadingSettings;
+    [CascadingParameter(Name = "ReadingSettings")]
+    public ReadingSettings ReadingSettings { get; set; }
 
     #region 设置面板显示控制
 
@@ -130,16 +134,26 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        ReadingSettings = new ReadingSettings();
-        var fonts = await JsRuntime.InvokeAsync<List<FontInfo>>("getAvailableFonts");
-        ReadingSettings.AvailableFonts.AddRange(fonts);
-        var defaultFont = new FontInfo
-            {
-                ZH = "系统默认",
-                EN = await JsRuntime.InvokeAsync<string>("getDefaultFont")
-            };
-        ReadingSettings.AvailableFonts.Add(defaultFont);
-        ReadingSettings.Font = defaultFont;
+        ReadingSettings ??= new ReadingSettings();
+        if (await LocalStorage.ContainKeyAsync("ReadingSettings"))
+        {
+            var settingsStored = LocalStorage.GetItemAsync<ReadingSettingsStorage>("ReadingSettings");
+            Mapper.Map(settingsStored, ReadingSettings);
+        }
+        else
+        {
+            var fonts = await JsRuntime.InvokeAsync<List<FontInfo>>("getAvailableFonts");
+            ReadingSettings.AvailableFonts.AddRange(fonts);
+            var defaultFont = new FontInfo
+                {
+                    ZH = "系统默认",
+                    EN = (await JsRuntime.InvokeAsync<string>("getDefaultFont"))
+                };
+            ReadingSettings.AvailableFonts.Add(defaultFont);
+            ReadingSettings.Font = defaultFont;
+            var defaultSettings = Mapper.Map<ReadingSettingsStorage>(ReadingSettings);
+            await LocalStorage.SetItemAsync("ReadingSettings", defaultSettings);
+        }
         await base.OnParametersSetAsync();
     }
 

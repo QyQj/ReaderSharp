@@ -1,6 +1,6 @@
 {
-  "name": "ReaderSharp.WebAssembly",
-  "short_name": "ReaderSharp.WebAssembly",
+  "name": "ReaderSharp.Client.Wasm",
+  "short_name": "ReaderSharp.Client.Wasm",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,7 +1,6 @@
 ﻿@using System.ComponentModel
 @using Microsoft.AspNetCore.Components
 @using ReaderSharp.Client.WebAssembly.Models
-@using ReaderSharp.Client.WebAssembly.Pages
 <MudContainer Class="d-flex flex-column">
     <MudSelect T="FontInfo" @bind-Value="ReadingSettings.Font" Label="字体">
         @foreach (var font in ReadingSettings.AvailableFonts)

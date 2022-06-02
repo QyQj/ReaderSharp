@@ -433,5 +433,5 @@ function isSupportFontFamily(f) {
 }
 
 function getDefaultFont() {
-    return (document.documentElement.currentStyle ? document.documentElement.currentStyle : window.getComputedStyle(document.documentElement)).fontFamily;
+    return (document.documentElement.currentStyle ? document.documentElement.currentStyle : window.getComputedStyle(document.documentElement)).fontFamily.trim().replace("\"", "").replace("\"", "");
 }
