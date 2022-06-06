@@ -8,6 +8,7 @@
     <base href="/" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <style type="text/css">
@@ -27,16 +28,66 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="position-absolute top-50 start-50 translate-middle" style="width: 50%">
+            <h4>程序加载中</h4>
+            <div class="progress mt-2" style="height: 2em; position: center;">
+                <div id="progressbar"
+                     class="progress-bar progress-bar-striped progress-bar-animated"
+                     style="background-color: #594ae2;">
+                </div>
+            </div>
+            <div>
+                <span id="progressLabel" class="text-muted">正在获取文件列表······</span>
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
     <script src="./helpScript.js"></script>
+    <script>
+        function StartBlazor() {
+            let loadedCount = 0;
+            const resourcesToLoad = [];
+            Blazor.start({
+                loadBootResource:
+                    function (type, filename, defaultUri, integrity) {
+                        if (type == "dotnetjs")
+                            return defaultUri;
+
+                        const fetchResources = fetch(defaultUri, {
+                            cache: 'no-cache',
+                            integrity: integrity,
+                            headers: { 'MyCustomHeader': 'My custom value' }
+                        });
+
+                        resourcesToLoad.push(fetchResources);
+
+                        fetchResources.then((r) => {
+                            loadedCount += 1;
+                            if (filename == "blazor.boot.json")
+                                return;
+                            const totalCount = resourcesToLoad.length;
+                            const percentLoaded = 10 + parseInt((loadedCount * 90.0) / totalCount);
+                            const progressbar = document.getElementById('progressbar');
+                            progressbar.style.width = percentLoaded + '%';
+                            const progressLabel = document.getElementById('progressLabel');
+                            progressLabel.innerText = `从服务器获取文件： ${loadedCount}/${totalCount}: ${filename}`;
+                        });
+
+                        return fetchResources;
+                    }
+            });
+        }
+
+        StartBlazor();
+    </script>
 </body>
 </html>
