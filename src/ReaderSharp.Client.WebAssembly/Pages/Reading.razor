@@ -137,7 +137,7 @@
         ReadingSettings ??= new ReadingSettings();
         if (await LocalStorage.ContainKeyAsync("ReadingSettings"))
         {
-            var settingsStored = LocalStorage.GetItemAsync<ReadingSettingsStorage>("ReadingSettings");
+            var settingsStored = await LocalStorage.GetItemAsync<ReadingSettingsStorage>("ReadingSettings");
             Mapper.Map(settingsStored, ReadingSettings);
         }
         else
