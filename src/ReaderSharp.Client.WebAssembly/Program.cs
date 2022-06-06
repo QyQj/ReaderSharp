@@ -1,5 +1,3 @@
-using System;
-using System.Net.Http;
 using Blazored.LocalStorage;
 using Blazored.LocalStorage.Serialization;
 using Microsoft.AspNetCore.Components.Web;
@@ -8,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MudBlazor.Services;
 using ReaderSharp.Client.WebAssembly;
+using System;
+using System.Net.Http;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
