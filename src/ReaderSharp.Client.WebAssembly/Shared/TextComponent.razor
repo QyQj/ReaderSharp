@@ -1,7 +1,9 @@
 ﻿@using System.Runtime.CompilerServices
+@using Blazored.LocalStorage
 @using ReaderSharp.Client.WebAssembly.Pages
 @using ReaderSharp.Client.WebAssembly.Models
 @inject IJSRuntime JsRuntime
+@inject ILocalStorageService LocalStorage
 
 <MudContainer Class="px-0" Style="overflow: scroll">
     @if (Reading.IsMobile)
@@ -75,9 +77,10 @@
         base.OnAfterRender(firstRender);
     }
 
-    public void OnReadingSettingsChanged(object source, EventArgs args)
+    private void OnReadingSettingsChanged(object source, EventArgs args)
     {
         StateHasChanged();
+        LocalStorage.SetItemAsync("ReadingSettings", ReadingSettings);
     }
 }
 
